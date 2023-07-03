@@ -3,6 +3,7 @@ const serverConfig = require('./configs/sever.config');
 const mongoose = require ('mongoose');
 const dbConfig = require('./configs/db.config');
 const userModel = require('./models/user.model');
+const bcrypt = require ('bcrypt');
 
 
 
@@ -30,6 +31,7 @@ async function init(){
     let admin = userModel.findOne({
         userId:"admin"
     })
+    
     if(admin){
         console.log("Admin user already present");
         return;
@@ -39,8 +41,9 @@ async function init(){
         userId:"admin",
         email:"shreetikagmm123@gmail.com",
         userType:"ADMIN",
-        password :"Welcome1",
+        password :bcrypt.hashSync("Welcome1",8)
     });
+    
     console.log(admin);
 
 }
